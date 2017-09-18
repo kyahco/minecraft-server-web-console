@@ -16,7 +16,7 @@ if(isset($_POST['cmd'])) {
                 #
                 # Not working
                 $cmd = "cd ". $_SERVER['DOCUMENT_ROOT'] . "/" . SERVER_ROOT_DIR.";./run.sh";
-                $output = shell_exec('sudo screen -S mcs -p 0 -X stuff "' .$cmd. '\n";');
+                $output = shell_exec('byobu send-keys -t test C-m "' .$cmd. '" Enter' );
                 if($output) {
                     echo "<i class='fa fa-times-circle notification-error'></i> <div class='notification-content'> <div class='notification-header notification-error'>Error</div> Error, $output</div>";
                     $elog->elog("  └─ $output");
