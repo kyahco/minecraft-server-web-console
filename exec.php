@@ -12,11 +12,11 @@ if(isset($_POST['cmd'])) {
 			      $elog->elog("Recieved start command.");
             if (!$ss) {
 		            file_put_contents(SERVER_LOG_DIR, "[" . date("h:i:s") . "] [SYSTM]: Recieved start command, starting server... \n", FILE_APPEND);
-                # shell_exec("sudo screen -S mcs");
+                # shell_exec("sudo byobu new -s mcs");
                 #
                 # Not working
                 $cmd = "cd ". $_SERVER['DOCUMENT_ROOT'] . "/" . SERVER_ROOT_DIR.";./run.sh";
-                $output = shell_exec('byobu send-keys -t test C-m "' .$cmd. '" Enter' );
+                $output = shell_exec('sudo byobu send-keys -t test C-m "' .$cmd. '" Enter');
                 if($output) {
                     echo "<i class='fa fa-times-circle notification-error'></i> <div class='notification-content'> <div class='notification-header notification-error'>Error</div> Error, $output</div>";
                     $elog->elog("  └─ $output");
@@ -33,7 +33,7 @@ if(isset($_POST['cmd'])) {
 	          $elog->elog("Recieved stop command.");
             if ($ss) {
                 file_put_contents(SERVER_LOG_DIR, "[" . date("h:i:s") . "] [SYSTM]: Recieved stop command, stopping server... \n", FILE_APPEND);
-                $output = shell_exec('sudo screen -S mcs -p 0 -X stuff "' .$cmd. '\n";');
+                $output = shell_exec('sudo byobu send-keys -t test C-m "' .$cmd. '" Enter');
                 if($output) {
                     echo "<i class='fa fa-times-circle notification-error'></i> <div class='notification-content'> <div class='notification-header notification-error'>Error</div> Error, $output</div>";
                     $elog->elog("  └─ $output");
@@ -50,7 +50,7 @@ if(isset($_POST['cmd'])) {
 			      $elog->elog("Issued a server command: $cmd");
             if ($ss) {
 
-                $output = shell_exec('sudo screen -S mcs -p 0 -X stuff "' .$cmd. '\n";');
+                $output = shell_exec('sudo byobu send-keys -t test C-m "' .$cmd. '" Enter');
                 if($output) {
                     echo "<i class='fa fa-times-circle notification-error'></i> <div class='notification-content'> <div class='notification-header notification-error'>Error</div> Error, $output</div>";
                     $elog->elog("  └─ $output");
